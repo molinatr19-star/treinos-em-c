@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 #define QTD_NUMEROS 10
 
@@ -11,9 +12,16 @@ void limparBuffer() {
 // Le um numero decimal, protegido contra letra
 double lerNumero(int posicao) {
     double valor;
+    int resultado;
     while (1) {
         printf("Numero %d: ", posicao);
-        if (scanf("%lf", &valor) != 1) {
+        resultado = scanf("%lf", &valor);
+        if (resultado == EOF) {
+            // Fim da entrada: sem isso o programa ficaria em loop infinito
+            printf("\nEntrada encerrada antes do fim. Programa finalizado.\n");
+            exit(1);
+        }
+        if (resultado != 1) {
             printf("Entrada invalida! Digite um numero.\n");
             limparBuffer();
         } else {
